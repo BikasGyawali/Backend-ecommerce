@@ -28,21 +28,21 @@ const getAllItem = async (req, res) => {
   const page = Number(req.query.pageNumber) || 1;
   const keyword = req.query.keyword
     ? {
-        $or: [
-          {
-            name: {
-              $regex: req.query.keyword,
-              $options: "i",
-            },
+      $or: [
+        {
+          name: {
+            $regex: req.query.keyword,
+            $options: "i",
           },
-          {
-            category: {
-              $regex: req.query.keyword,
-              $options: "i",
-            },
+        },
+        {
+          category: {
+            $regex: req.query.keyword,
+            $options: "i",
           },
-        ],
-      }
+        },
+      ],
+    }
     : {};
 
   const count = await Item.countDocuments({
@@ -66,7 +66,7 @@ const getAllItem = async (req, res) => {
     );
   }
 
-  const filteredProductsCount = filteredProducts?.length;
+  //const filteredProductsCount = filteredProducts?.length;
 
   // const filteredProducts=await products.filter((product)=>product.category===queryCopy);
   // (filteredProducts);
@@ -74,9 +74,7 @@ const getAllItem = async (req, res) => {
   // .limit(pageSize)
   // .skip(pageSize * (page - 1));
 
-  res
-    .status(200)
-    .json({ products, filteredProducts, count, filteredProductsCount });
+  res.status(200).json({ products, filteredProducts, count });
   // } else {
   //   res.status(400).json({ message: "No match found" });
   // }
